@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.playgama/developer-cabinet",
+  "title": "Playgama Developer Cabinet",
+  "description": "Manage Playgama HTML5 games: forms, builds, covers, in-app catalog, leaderboards, sandbox.",
+  "version": "1.0.0",
+  "websiteUrl": "https://developer.playgama.com",
+  "repository": {
+    "url": "https://github.com/Playgama/developer-cabinet-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://developer.playgama.com/api/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer token issued in the Playgama Developer Cabinet: Bearer pgm_mcp_...",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
