@@ -4,7 +4,7 @@
   "title": "Playgama Developer Cabinet",
   "description": "Manage Playgama HTML5 games: forms, builds, covers, in-app catalog, leaderboards, sandbox.",
   "version": "1.0.0",
-  "websiteUrl": "https://developer.playgama.com",
+  "websiteUrl": "https://playgama.com/mcp/",
   "repository": {
     "url": "https://github.com/Playgama/developer-cabinet-mcp",
     "source": "github"
