@@ -89,7 +89,7 @@ token.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.0.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.1.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -120,6 +120,8 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | **Sandbox** | | |
 | `get_sandbox_state` | Reads what is live in the sandbox and whether a publish would be accepted | read-only |
 | `publish_sandbox` | Makes a build playable by anyone with the link, without moderation | write |
+| `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
+| `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers that sends players to the sandbox; the first run per game is free | write |
 
 Every write tool is annotated `destructiveHint: true`, so clients ask before calling it.
 
