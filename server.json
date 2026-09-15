@@ -12,15 +12,7 @@
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://developer.playgama.com/api/mcp",
-      "headers": [
-        {
-          "name": "Authorization",
-          "description": "Bearer token issued in the Playgama Developer Cabinet: Bearer pgm_mcp_...",
-          "isRequired": true,
-          "isSecret": true
-        }
-      ]
+      "url": "https://developer.playgama.com/api/mcp"
     }
   ]
 }
