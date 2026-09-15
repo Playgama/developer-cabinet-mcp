@@ -7,6 +7,18 @@ The server is hosted by Playgama. There is nothing to install or run and no toke
 give your client the endpoint below, sign in to the cabinet in the browser it opens, and allow
 the connection.
 
+## What you get
+
+- **Publish in seconds** — ask your agent, get a public playable link back.
+- **Get the audience** — the game takes its first players from the Playgama network, and
+  Playgama DSP can send more the day it goes live (beta). The agent can start that campaign
+  itself with `start_sandbox_traffic`; the first run per game is free.
+- **Start monetization** — rewarded, interstitial and banner ads switch on through
+  [Playgama Ad](https://playgama.com/adv) once the game clears the session threshold
+  (access by request).
+- **Get all analytics** — playtime, retention and revenue reports in your developer
+  dashboard; payouts start at 100 USD.
+
 | | |
 | --- | --- |
 | Endpoint | `https://developer.playgama.com/api/mcp` |
@@ -143,6 +155,21 @@ These stay human actions in the cabinet:
 - rolling a game back to its last submitted version;
 - reading payouts;
 - uploading screenshots, videos and other assets.
+
+## Beyond the MCP server
+
+The rest of the Playgama stack picks up where this server stops:
+
+- **[Playgama Bridge SDK](https://wiki.playgama.com/playgama/bridge-sdk/getting-started)** — one API
+  for ads, leaderboards, payments and platform SDKs when you publish the same game across platforms.
+  Open source, `npm i @playgama/bridge`.
+- **[Playgama Ad](https://playgama.com/adv)** — monetizes web games with rewarded, interstitial and
+  banner formats through a single lightweight JS SDK, with gaming-focused demand, Google Ad Manager
+  MCM support and reporting. Access by request.
+- **[Playgama Wrap](https://playgama.com/wrap/)** — turns the same game into a standalone site on your
+  own domain, with hosting, player accounts, in-game purchases, PWA install and indexable SEO pages.
+  Early access.
+- **Playgama DSP** — brings the first players to a freshly published game. Beta.
 
 ## License
 
