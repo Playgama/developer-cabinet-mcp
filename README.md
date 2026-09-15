@@ -3,40 +3,41 @@
 Publish and manage your HTML5 games on [Playgama](https://playgama.com/mcp/) straight from your
 AI agent — Codex, Claude Code, Cursor or VS Code. Full guide: [Playgama wiki](https://wiki.playgama.com/playgama/mcp).
 
-The server is hosted by Playgama. There is nothing to install or run — you connect a client to
-the endpoint below with your token.
+The server is hosted by Playgama. There is nothing to install or run and no token to copy — you
+give your client the endpoint below, sign in to the cabinet in the browser it opens, and allow
+the connection.
 
 | | |
 | --- | --- |
 | Endpoint | `https://developer.playgama.com/api/mcp` |
 | Transport | Streamable HTTP |
-| Authentication | `Authorization: Bearer YOUR_TOKEN` |
-| Token | Issue it at [developer.playgama.com/mcp](https://developer.playgama.com/mcp) |
+| Authentication | OAuth 2.1 — the client discovers it from the endpoint |
+| Connected agents | See and revoke them at [developer.playgama.com/mcp](https://developer.playgama.com/mcp) |
 
-You need a Playgama developer account with the sign-up finished. A token reaches the games of
-your own organization and nothing else. It does not expire — revoke it on the same page.
+You need a Playgama developer account with the sign-up finished. A connected agent reaches the
+games of your own organization and nothing else. It stays connected while it keeps using the
+server; revoke it on the same page and it is refused on its next call.
 
 Questions: [developer.success@playgama.com](mailto:developer.success@playgama.com)
 
 ## Connect
 
-Replace `YOUR_TOKEN` with your token.
+Every client below opens the browser the first time it connects. Sign in to the cabinet if you
+are not signed in, check the account and the agent, and allow it.
 
 ### Codex
 
-`~/.codex/config.toml`:
-
-```toml
-[mcp_servers.playgama-developer-cabinet]
-url = "https://developer.playgama.com/api/mcp"
-http_headers = { "Authorization" = "Bearer YOUR_TOKEN" }
+```sh
+codex mcp add 'playgama-developer-cabinet' --url 'https://developer.playgama.com/api/mcp'
 ```
 
 ### Claude Code
 
 ```sh
-claude mcp add --transport 'http' 'playgama-developer-cabinet' 'https://developer.playgama.com/api/mcp' --header 'Authorization: Bearer YOUR_TOKEN'
+claude mcp add --transport 'http' 'playgama-developer-cabinet' 'https://developer.playgama.com/api/mcp'
 ```
+
+Then run `/mcp` in Claude Code and choose the server to sign in.
 
 ### Cursor
 
@@ -47,10 +48,7 @@ claude mcp add --transport 'http' 'playgama-developer-cabinet' 'https://develope
   "mcpServers": {
     "playgama-developer-cabinet": {
       "type": "http",
-      "url": "https://developer.playgama.com/api/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_TOKEN"
-      }
+      "url": "https://developer.playgama.com/api/mcp"
     }
   }
 }
@@ -58,34 +56,28 @@ claude mcp add --transport 'http' 'playgama-developer-cabinet' 'https://develope
 
 ### VS Code
 
-`.vscode/mcp.json` — VS Code asks for the token once and keeps it out of the file:
+`.vscode/mcp.json`:
 
 ```json
 {
   "servers": {
     "playgama-developer-cabinet": {
       "type": "http",
-      "url": "https://developer.playgama.com/api/mcp",
-      "headers": {
-        "Authorization": "Bearer ${input:playgama-developer-cabinet-mcp-token}"
-      }
+      "url": "https://developer.playgama.com/api/mcp"
     }
-  },
-  "inputs": [
-    {
-      "id": "playgama-developer-cabinet-mcp-token",
-      "type": "promptString",
-      "description": "Playgama MCP token for playgama-developer-cabinet",
-      "password": true
-    }
-  ]
+  }
 }
 ```
 
 ### Claude Desktop and claude.ai
 
-Not supported yet: their connectors require OAuth, and the server authenticates with a static
-token.
+Settings → Connectors → Add custom connector, with the endpoint
+`https://developer.playgama.com/api/mcp`.
+
+### A token in a config from before OAuth
+
+If your config still sends an `Authorization` header with a `pgm_mcp_` token, it keeps working
+for now. Remove the header and connect again as above.
 
 ## Tools
 
