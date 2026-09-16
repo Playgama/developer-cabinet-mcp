@@ -12,7 +12,7 @@ the connection.
 - **Publish in seconds** — ask your agent, get a public playable link back.
 - **Get the audience** — the game takes its first players from the Playgama network, and
   Playgama DSP can send more the day it goes live (beta). The agent can start that campaign
-  itself with `start_sandbox_traffic`; the first run per game is free.
+  itself with `start_sandbox_traffic`; share the game first and the boost is free.
 - **Start monetization** — rewarded, interstitial and banner ads switch on through
   [Playgama Ad](https://playgama.com/adv) once the game clears the session threshold
   (access by request).
