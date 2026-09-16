@@ -152,9 +152,8 @@ Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (
 
 ### Sandbox traffic
 
-Get a free boost after sharing your game on X, Threads, LinkedIn, Facebook or Reddit. The
-developer publishes the post and pastes its link to the agent, which passes one to three public
-post links to `start_sandbox_traffic` in `postUrls`; one is enough. The bonus is once per game,
+Get a free boost after sharing your game on any platform. The developer publishes the post and
+pastes its link to the agent, which passes one to three public HTTPS post links to `start_sandbox_traffic` in `postUrls`; one is enough. The bonus is once per game,
 for up to three games per organization over its lifetime. Earlier free launches without sharing
 do not use this bonus. `get_sandbox_share` has the ready post and share links. Paid traffic is
 available in the cabinet; MCP does not purchase it.
