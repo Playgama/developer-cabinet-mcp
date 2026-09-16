@@ -92,6 +92,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `update_application_form` | Saves form fields; fields you leave out keep their values | write |
 | `get_submission_state` | Tells whether the game can be submitted to moderation now, and why not | read-only |
 | `list_moderation_comments` | Reads the moderation correspondence on a game | read-only |
+| `get_launch_steps` | Reads a game's launch path in order — archive, Bridge SDK, covers, form, sandbox, share, traffic — with the current step and the tools that move each one | read-only |
 | **Builds** | | |
 | `start_archive_upload` | Starts a zip upload and answers a one-hour upload URL | write |
 | `confirm_archive_upload` | Adds the uploaded archive to the form and starts unpacking | write |
@@ -109,6 +110,8 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | **Testing** | | |
 | `get_archive_qa_tool_link` | Opens an uploaded build in the Playgama QA Tool | read-only |
 | `get_local_game_qa_tool_link` | Opens a game served from localhost in the QA Tool | read-only |
+| **Docs** | | |
+| `get_bridge_sdk_docs` | Reads the live Playgama Bridge SDK wiki, the whole index or one page | read-only |
 | **Sandbox** | | |
 | `get_sandbox_state` | Reads what is live in the sandbox and whether a publish would be accepted | read-only |
 | `get_sandbox_share` | Reads the ready post and share links for the live sandbox | read-only |
@@ -117,6 +120,8 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers that sends players to the sandbox; the first run per game is free | write |
 
 Every write tool is annotated `destructiveHint: true`, so clients ask before calling it.
+
+Agents start with `get_launch_steps` and read it again after each step.
 
 ### Uploading a build
 
@@ -127,7 +132,8 @@ Every write tool is annotated `destructiveHint: true`, so clients ask before cal
    (upload a corrected zip), or `processing` is `DONE` and `bridgeSdk` is no longer `PENDING`;
    if `bridgeSdk` is still `PENDING` after a few minutes, go ahead.
    `bridgeSdk: NOT_FOUND` means the Playgama Bridge SDK was not detected: it does not stop a
-   sandbox publish, but sandbox traffic requires it — tell the developer before publishing.
+   sandbox publish, but sandbox traffic requires it — tell the developer before publishing;
+   `get_bridge_sdk_docs` has the integration docs.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
 1080×1920 (portrait) or 1920×1080 (landscape).
