@@ -117,7 +117,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_sandbox_share` | Reads the ready post and share links for the live sandbox | read-only |
 | `publish_sandbox` | Makes a build playable by anyone with the link, without moderation | write |
 | `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
-| `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers that sends players to the sandbox; the first run per game is free | write |
+| `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers that sends players to the sandbox; free traffic is a share bonus and takes 1–3 public post links | write |
 
 Every write tool is annotated `destructiveHint: true`, so clients ask before calling it.
 
@@ -137,6 +137,15 @@ Agents start with `get_launch_steps` and read it again after each step.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
 1080×1920 (portrait) or 1920×1080 (landscape).
+
+### Sandbox traffic
+
+Get a free boost after sharing your game on X, LinkedIn, Threads or Facebook. The agent passes
+one to three public post links to `start_sandbox_traffic` in `postUrls`; one is enough. The bonus
+is once per game, for up to three games per organization over its lifetime. Earlier free launches
+without sharing do not use this bonus. `get_sandbox_share` has the ready post and share links,
+Reddit among them — a Reddit post does not count toward the bonus. Paid traffic is available in
+the cabinet; MCP does not purchase it.
 
 ## Limits
 
