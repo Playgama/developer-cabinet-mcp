@@ -111,6 +111,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_local_game_qa_tool_link` | Opens a game served from localhost in the QA Tool | read-only |
 | **Sandbox** | | |
 | `get_sandbox_state` | Reads what is live in the sandbox and whether a publish would be accepted | read-only |
+| `get_sandbox_share` | Reads the ready post and share links for the live sandbox | read-only |
 | `publish_sandbox` | Makes a build playable by anyone with the link, without moderation | write |
 | `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
 | `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers that sends players to the sandbox; the first run per game is free | write |
@@ -122,8 +123,11 @@ Every write tool is annotated `destructiveHint: true`, so clients ask before cal
 1. `start_archive_upload` answers `uploadUrl` and `headers`.
 2. PUT the zip to `uploadUrl` with exactly those headers, e.g.
    `curl -T game.zip -H "Content-Type: application/zip" "<uploadUrl>"`.
-3. `confirm_archive_upload`, then poll `get_archive_status` until `processing` is `DONE` or
-   `FAILED`.
+3. `confirm_archive_upload`, then poll `get_archive_status` until `processing` is `FAILED`
+   (upload a corrected zip), or `processing` is `DONE` and `bridgeSdk` is no longer `PENDING`;
+   if `bridgeSdk` is still `PENDING` after a few minutes, go ahead.
+   `bridgeSdk: NOT_FOUND` means the Playgama Bridge SDK was not detected: it does not stop a
+   sandbox publish, but sandbox traffic requires it — tell the developer before publishing.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
 1080×1920 (portrait) or 1920×1080 (landscape).
