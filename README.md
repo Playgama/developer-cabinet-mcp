@@ -30,6 +30,12 @@ You need a Playgama developer account with the sign-up finished. A connected age
 games of your own organization and nothing else. It stays connected while it keeps using the
 server; revoke it on the same page and it is refused on its next call.
 
+**Every game needs the [Playgama Bridge SDK](https://wiki.playgama.com/playgama/bridge-sdk/getting-started)
+integrated — the sandbox included.** If your game does not have it yet, the agent integrates it
+before the first upload: `get_bridge_sdk_docs` serves the docs, and the
+[Game checklist](https://wiki.playgama.com/playgama/mcp/game-checklist) lists the required steps
+in order. A build in which the SDK was not detected is not published.
+
 Questions: [developer.success@playgama.com](mailto:developer.success@playgama.com)
 
 ## Connect
@@ -141,11 +147,12 @@ Agents start with `get_launch_steps` and read it again after each step.
 2. PUT the zip to `uploadUrl` with exactly those headers, e.g.
    `curl -T game.zip -H "Content-Type: application/zip" "<uploadUrl>"`.
 3. `confirm_archive_upload`, then poll `get_archive_status` until `processing` is `FAILED`
-   (upload a corrected zip), or `processing` is `DONE` and `bridgeSdk` is no longer `PENDING`;
-   if `bridgeSdk` is still `PENDING` after a few minutes, go ahead.
-   `bridgeSdk: NOT_FOUND` means the Playgama Bridge SDK was not detected: it does not stop a
-   sandbox publish, but sandbox traffic requires it — tell the developer before publishing;
-   `get_bridge_sdk_docs` has the integration docs.
+   (upload a corrected zip), or `processing` is `DONE` and `bridgeSdk` is no longer `PENDING`.
+   Publish only a build with `bridgeSdk: FOUND` — the Playgama Bridge SDK is required for every
+   game, the sandbox included. On `NOT_FOUND` do not publish: tell the developer, fix the
+   integration with `get_bridge_sdk_docs` and upload a new build. If `bridgeSdk` is still
+   `PENDING` after a few minutes, the analysis may never answer — upload the build again rather
+   than publishing it.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
 1080×1920 (portrait) or 1920×1080 (landscape).
@@ -178,7 +185,8 @@ These stay human actions in the cabinet:
 
 The rest of the Playgama stack picks up where this server stops:
 
-- **[Playgama Bridge SDK](https://wiki.playgama.com/playgama/bridge-sdk/getting-started)** — one API
+- **[Playgama Bridge SDK](https://wiki.playgama.com/playgama/bridge-sdk/getting-started)** — required
+  in every game you upload (see above), and the same integration carries the game further: one API
   for ads, leaderboards, payments and platform SDKs when you publish the same game across platforms.
   Open source, `npm i @playgama/bridge`.
 - **[Playgama Ad](https://playgama.com/adv)** — monetizes web games with rewarded, interstitial and
