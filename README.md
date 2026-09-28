@@ -34,7 +34,8 @@ server; revoke it on the same page and it is refused on its next call.
 integrated — the sandbox included.** If your game does not have it yet, the agent integrates it
 before the first upload: `get_bridge_sdk_docs` serves the docs, and the
 [Game checklist](https://wiki.playgama.com/playgama/mcp/game-checklist) lists the required steps
-in order. A build in which the SDK was not detected is not published.
+in order. A build in which the SDK was not detected is not published, and the sandbox takes
+**Playgama Bridge 2.2.0 or newer** only.
 
 Questions: [developer.success@playgama.com](mailto:developer.success@playgama.com)
 
@@ -114,7 +115,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | **Builds** | | |
 | `start_archive_upload` | Starts a zip upload and answers a one-hour upload URL | write |
 | `confirm_archive_upload` | Adds the uploaded archive to the form and starts unpacking | write |
-| `get_archive_status` | Reads unpacking progress and the Bridge SDK analysis | read-only |
+| `get_archive_status` | Reads unpacking progress and the build check | read-only |
 | **Covers** | | |
 | `start_cover_upload` | Starts a cover upload for one slot: square, portrait or landscape | write |
 | `confirm_cover_upload` | Checks the image and puts it in its slot | write |
@@ -146,13 +147,13 @@ Agents start with `get_launch_steps` and read it again after each step.
 1. `start_archive_upload` answers `uploadUrl` and `headers`.
 2. PUT the zip to `uploadUrl` with exactly those headers, e.g.
    `curl -T game.zip -H "Content-Type: application/zip" "<uploadUrl>"`.
-3. `confirm_archive_upload`, then poll `get_archive_status` until `processing` is `FAILED`
-   (upload a corrected zip), or `processing` is `DONE` and `bridgeSdk` is no longer `PENDING`.
-   Publish only a build with `bridgeSdk: FOUND` — the Playgama Bridge SDK is required for every
-   game, the sandbox included. On `NOT_FOUND` do not publish: tell the developer, fix the
-   integration with `get_bridge_sdk_docs` and upload a new build. If `bridgeSdk` is still
-   `PENDING` after a few minutes, the analysis may never answer — upload the build again rather
-   than publishing it.
+3. `confirm_archive_upload`, then poll `get_archive_status` until `state.status` is no longer
+   `CHECKING`. `PASSED` publishes; on `PROBLEM` or `NOT_CHECKED` pass `state.message` on to the
+   developer word for word and fix the build — `publish_sandbox` and a submit to moderation both
+   refuse it (`get_bridge_sdk_docs` has the SDK integration docs). The sandbox also refuses a build
+   on a Playgama Bridge older than 2.2.0 (`BRIDGE_VERSION_OUTDATED`) or one whose version the check
+   could not read (`BRIDGE_VERSION_UNKNOWN`): update the SDK and upload a new archive. If
+   `processing` is `FAILED`, upload a corrected zip.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
 1080×1920 (portrait) or 1920×1080 (landscape).
