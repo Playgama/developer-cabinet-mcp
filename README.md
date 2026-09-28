@@ -34,7 +34,8 @@ server; revoke it on the same page and it is refused on its next call.
 integrated — the sandbox included.** If your game does not have it yet, the agent integrates it
 before the first upload: `get_bridge_sdk_docs` serves the docs, and the
 [Game checklist](https://wiki.playgama.com/playgama/mcp/game-checklist) lists the required steps
-in order. A build in which the SDK was not detected is not published.
+in order. A build in which the SDK was not detected is not published, and the sandbox takes
+**Playgama Bridge 2.2.0 or newer** only.
 
 Questions: [developer.success@playgama.com](mailto:developer.success@playgama.com)
 
@@ -149,8 +150,10 @@ Agents start with `get_launch_steps` and read it again after each step.
 3. `confirm_archive_upload`, then poll `get_archive_status` until `state.status` is no longer
    `CHECKING`. `PASSED` publishes; on `PROBLEM` or `NOT_CHECKED` pass `state.message` on to the
    developer word for word and fix the build — `publish_sandbox` and a submit to moderation both
-   refuse it (`get_bridge_sdk_docs` has the SDK integration docs). If `processing` is `FAILED`,
-   upload a corrected zip.
+   refuse it (`get_bridge_sdk_docs` has the SDK integration docs). The sandbox also refuses a build
+   on a Playgama Bridge older than 2.2.0 (`BRIDGE_VERSION_OUTDATED`) or one whose version the check
+   could not read (`BRIDGE_VERSION_UNKNOWN`): update the SDK and upload a new archive. If
+   `processing` is `FAILED`, upload a corrected zip.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
 1080×1920 (portrait) or 1920×1080 (landscape).
