@@ -100,7 +100,7 @@ for now. Remove the header and connect again as above.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.1.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.3.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -131,6 +131,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_local_game_qa_tool_link` | Opens a game served from localhost in the QA Tool | read-only |
 | **Docs** | | |
 | `get_bridge_sdk_docs` | Reads the live Playgama Bridge SDK wiki, the whole index or one page | read-only |
+| `get_game_checklist` | Reads the live game checklist — what a game and its archive must meet before an upload | read-only |
 | **Sandbox** | | |
 | `get_sandbox_state` | Reads what is live in the sandbox and whether a publish would be accepted | read-only |
 | `get_sandbox_share` | Reads the ready post and share links for the live sandbox | read-only |
@@ -144,10 +145,12 @@ Agents start with `get_launch_steps` and read it again after each step.
 
 ### Uploading a build
 
-1. `start_archive_upload` answers `uploadUrl` and `headers`.
-2. PUT the zip to `uploadUrl` with exactly those headers, e.g.
+1. Read `get_game_checklist` and check the game and the zip against each item; fix what fails
+   before uploading.
+2. `start_archive_upload` answers `uploadUrl` and `headers`.
+3. PUT the zip to `uploadUrl` with exactly those headers, e.g.
    `curl -T game.zip -H "Content-Type: application/zip" "<uploadUrl>"`.
-3. `confirm_archive_upload`, then poll `get_archive_status` until `state.status` is no longer
+4. `confirm_archive_upload`, then poll `get_archive_status` until `state.status` is no longer
    `CHECKING`. `PASSED` publishes; on `PROBLEM` or `NOT_CHECKED` pass `state.message` on to the
    developer word for word and fix the build — `publish_sandbox` and a submit to moderation both
    refuse it (`get_bridge_sdk_docs` has the SDK integration docs). The sandbox also refuses a build
