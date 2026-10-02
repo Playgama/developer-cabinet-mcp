@@ -139,9 +139,10 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
 | `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers that sends players to the sandbox; free traffic is a share bonus and takes 1–3 public post links | write |
 
-Every write tool is annotated `destructiveHint: true`, so clients ask before calling it.
+Every write tool is annotated `destructiveHint: true`; clients decide how to use that hint when requesting confirmation.
 
-Agents start with `get_launch_steps` and read it again after each step.
+For a launch workflow, agents start with `get_launch_steps` and read it again after each step.
+A request only to read data does not authorize game changes, publication or a traffic campaign.
 
 ### Uploading a build
 
