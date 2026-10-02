@@ -152,15 +152,20 @@ A request only to read data does not authorize game changes, publication or a tr
 3. PUT the zip to `uploadUrl` with exactly those headers, e.g.
    `curl -T game.zip -H "Content-Type: application/zip" "<uploadUrl>"`.
 4. `confirm_archive_upload`, then poll `get_archive_status` until `state.status` is no longer
-   `CHECKING`. `PASSED` publishes; on `PROBLEM` or `NOT_CHECKED` pass `state.message` on to the
-   developer word for word and fix the build — `publish_sandbox` and a submit to moderation both
-   refuse it (`get_bridge_sdk_docs` has the SDK integration docs). The sandbox also refuses a build
-   on a Playgama Bridge older than 2.2.0 (`BRIDGE_VERSION_OUTDATED`) or one whose version the check
-   could not read (`BRIDGE_VERSION_UNKNOWN`): update the SDK and upload a new archive. If
-   `processing` is `FAILED`, upload a corrected zip.
+   `CHECKING`. Only a `PASSED` build can be published; on `PROBLEM` or `NOT_CHECKED` pass
+   `state.message` on to the developer word for word and fix the build — `publish_sandbox` and a
+   submit to moderation both refuse it (`get_bridge_sdk_docs` has the SDK integration docs). The
+   sandbox also refuses a build on a Playgama Bridge older than 2.2.0 (`BRIDGE_VERSION_OUTDATED`)
+   or one whose version the check could not read (`BRIDGE_VERSION_UNKNOWN`): update the SDK and
+   upload a new archive. If `processing` is `FAILED`, upload a corrected zip.
+5. A sandbox publish also needs all three covers and a complete form. Without them
+   `publish_sandbox` is refused with `COVERS_INCOMPLETE`, which names the empty slots in
+   `emptySlots`, or `FORM_INCOMPLETE`, which names the fields in `missingFields`: upload the covers
+   or fill the fields with `update_application_form`, then publish again.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
-1080×1920 (portrait) or 1920×1080 (landscape).
+1080×1920 (portrait) or 1920×1080 (landscape). All three are required for a sandbox publish and
+for a submit to moderation.
 
 ### Sandbox traffic
 
