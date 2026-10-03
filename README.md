@@ -1,10 +1,10 @@
-# Playgama Developer Cabinet MCP Server
+# Playgama Developer Console MCP Server
 
 Publish and manage your HTML5 games on [Playgama](https://playgama.com/mcp/) straight from your
 AI agent — Codex, Claude Code, Cursor or VS Code. Full guide: [Playgama wiki](https://wiki.playgama.com/playgama/mcp).
 
 The server is hosted by Playgama. There is nothing to install or run and no token to copy — you
-give your client the endpoint below, sign in to the cabinet in the browser it opens, and allow
+give your client the endpoint below, sign in to the console in the browser it opens, and allow
 the connection.
 
 ## What you get
@@ -41,19 +41,19 @@ Questions: [developer.success@playgama.com](mailto:developer.success@playgama.co
 
 ## Connect
 
-Every client below opens the browser the first time it connects. Sign in to the cabinet if you
+Every client below opens the browser the first time it connects. Sign in to the console if you
 are not signed in, check the account and the agent, and allow it.
 
 ### Codex
 
 ```sh
-codex mcp add 'playgama-developer-cabinet' --url 'https://developer.playgama.com/api/mcp'
+codex mcp add 'playgama-developer-console' --url 'https://developer.playgama.com/api/mcp'
 ```
 
 ### Claude Code
 
 ```sh
-claude mcp add --transport 'http' 'playgama-developer-cabinet' 'https://developer.playgama.com/api/mcp'
+claude mcp add --transport 'http' 'playgama-developer-console' 'https://developer.playgama.com/api/mcp'
 ```
 
 Then run `/mcp` in Claude Code and choose the server to sign in.
@@ -65,7 +65,7 @@ Then run `/mcp` in Claude Code and choose the server to sign in.
 ```json
 {
   "mcpServers": {
-    "playgama-developer-cabinet": {
+    "playgama-developer-console": {
       "type": "http",
       "url": "https://developer.playgama.com/api/mcp"
     }
@@ -80,7 +80,7 @@ Then run `/mcp` in Claude Code and choose the server to sign in.
 ```json
 {
   "servers": {
-    "playgama-developer-cabinet": {
+    "playgama-developer-console": {
       "type": "http",
       "url": "https://developer.playgama.com/api/mcp"
     }
@@ -173,7 +173,7 @@ Get a free boost after sharing your game on any platform. The developer publishe
 pastes its link to the agent, which passes one to three public HTTPS post links to `start_sandbox_traffic` in `postUrls`; one is enough. The bonus is once per game,
 for up to three games per organization over its lifetime. Earlier free launches without sharing
 do not use this bonus. `get_sandbox_share` has the ready post and share links. Paid traffic is
-available in the cabinet; MCP does not purchase it.
+available in the console; MCP does not purchase it.
 
 ## Limits
 
@@ -183,7 +183,7 @@ available in the cabinet; MCP does not purchase it.
 
 ## What the server deliberately does not do
 
-These stay human actions in the cabinet:
+These stay human actions in the console:
 
 - submitting a game to moderation;
 - deleting anything — leaderboards, or archives and covers from the form;
