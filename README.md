@@ -137,9 +137,9 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | **Game telemetry** | | |
 | `get_game_telemetry_guide` | Reads agent-only instructions for instrumenting a game and interpreting telemetry | read-only |
 | `get_game_telemetry_analytics` | Reads a compact overview and paginated event inventory for one game | read-only |
-| `get_game_telemetry_event_analytics` | Reads preaggregated fields and bounded value summaries for one event | read-only |
-| `get_game_telemetry_timeseries` | Reads paginated 30-minute or daily telemetry trends | read-only |
-| `get_game_telemetry_session_facts` | Reads filtered, pseudonymized session facts for sequence questions | read-only |
+| `get_game_telemetry_event_analytics` | Reads preaggregated fields and bounded value summaries for one event, including performance fields | read-only |
+| `get_game_telemetry_timeseries` | Reads paginated 30-minute or daily event-volume and sampling-reach trends | read-only |
+| `get_game_telemetry_session_facts` | Reads filtered, pseudonymized product-event facts for sequence questions | read-only |
 | **Referrals** | | |
 | `get_referral_program` | Reads your organization's invitation, eligibility and referral traffic bonuses | read-only |
 | `apply_referral_code` | Accepts a developer-provided invitation before the organization's first sandbox publication | write |
@@ -186,11 +186,15 @@ gate.
 
 After a release has collected traffic, the agent starts with `get_game_telemetry_analytics`. It
 uses `get_game_telemetry_event_analytics` only for one relevant event or field,
-`get_game_telemetry_timeseries` for change over time, and `get_game_telemetry_session_facts` for a
-filtered order-of-events question. The tools return dynamic preaggregated JSON, not raw events and
-not a server-generated conclusion. The agent inspects the response's schema version, period,
-freshness, sample size and pagination, treats missing or null fields as unavailable rather than
-zero, and requests another page only when it can change the current conclusion.
+`get_game_telemetry_timeseries` for event volume or sampling reach over time, and
+`get_game_telemetry_session_facts` for a filtered product-event order question. FPS, frame-time and
+stutter summaries for `performance_sample` come from event analytics. Timeseries points do not
+contain those field values, and repetitive `core_ping` and `performance_sample` events are
+intentionally absent from session facts, so the current views do not support per-session FPS
+claims. The tools return dynamic preaggregated JSON, not raw events and not a server-generated
+conclusion. The agent inspects the response's schema version, period, freshness, sample size and
+pagination, treats missing or null fields as unavailable rather than zero, and requests another
+page only when it can change the current conclusion.
 
 The overview event inventory defaults to 50 event types and accepts up to 100. Its
 `events_page.next_cursor` is passed back as `eventCursor`; agents do not exhaust the inventory
