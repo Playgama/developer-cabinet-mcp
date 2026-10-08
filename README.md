@@ -16,8 +16,10 @@ the connection.
 - **Start monetization** — rewarded, interstitial and banner ads switch on through
   [Playgama Ad](https://playgama.com/adv) once the game clears the session threshold
   (access by request).
-- **Get all analytics** — playtime, retention and revenue reports in your developer
-  dashboard; payouts start at 100 USD.
+- **Improve a game from telemetry** — the agent can instrument the game, inspect compact
+  preaggregated event, trend and session views, and use the evidence to find progression or
+  performance problems. Playtime, retention and revenue reports remain in the developer dashboard;
+  payouts start at 100 USD.
 
 | | |
 | --- | --- |
@@ -100,7 +102,7 @@ for now. Remove the header and connect again as above.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.3.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.5.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -132,12 +134,21 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | **Docs** | | |
 | `get_bridge_sdk_docs` | Reads the live Playgama Bridge SDK wiki, the whole index or one page | read-only |
 | `get_game_checklist` | Reads the live game checklist — what a game and its archive must meet before an upload | read-only |
+| **Game telemetry** | | |
+| `get_game_telemetry_guide` | Reads agent-only instructions for instrumenting a game and interpreting telemetry | read-only |
+| `get_game_telemetry_analytics` | Reads a compact overview and paginated event inventory for one game | read-only |
+| `get_game_telemetry_event_analytics` | Reads preaggregated fields and bounded value summaries for one event | read-only |
+| `get_game_telemetry_timeseries` | Reads paginated 30-minute or daily telemetry trends | read-only |
+| `get_game_telemetry_session_facts` | Reads filtered, pseudonymized session facts for sequence questions | read-only |
+| **Referrals** | | |
+| `get_referral_program` | Reads your organization's invitation, eligibility and referral traffic bonuses | read-only |
+| `apply_referral_code` | Accepts a developer-provided invitation before the organization's first sandbox publication | write |
 | **Sandbox** | | |
 | `get_sandbox_state` | Reads what is live in the sandbox and whether a publish would be accepted | read-only |
 | `get_sandbox_share` | Reads the ready post and share links for the live sandbox | read-only |
 | `publish_sandbox` | Makes a build playable by anyone with the link, without moderation | write |
 | `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
-| `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers that sends players to the sandbox; free traffic is a share bonus and takes 1–3 public post links | write |
+| `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers; use a referral `bonusId`, or 1–3 public post links for the separate share bonus | write |
 
 Every write tool is annotated `destructiveHint: true`; clients decide how to use that hint when requesting confirmation.
 
@@ -167,13 +178,41 @@ Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (
 1080×1920 (portrait) or 1920×1080 (landscape). All three are required for a sandbox publish and
 for a submit to moderation.
 
+### Game telemetry
+
+Before finishing a game, the agent reads `get_game_telemetry_guide` and adds the relevant product
+progression events and performance sample. Telemetry is guidance, never an upload or publication
+gate.
+
+After a release has collected traffic, the agent starts with `get_game_telemetry_analytics`. It
+uses `get_game_telemetry_event_analytics` only for one relevant event or field,
+`get_game_telemetry_timeseries` for change over time, and `get_game_telemetry_session_facts` for a
+filtered order-of-events question. The tools return dynamic preaggregated JSON, not raw events and
+not a server-generated conclusion. The agent inspects the response's schema version, period,
+freshness, sample size and pagination, treats missing or null fields as unavailable rather than
+zero, and requests another page only when it can change the current conclusion.
+
+The overview event inventory defaults to 50 event types and accepts up to 100. Its
+`events_page.next_cursor` is passed back as `eventCursor`; agents do not exhaust the inventory
+preemptively. The full parameter and response guidance is in the
+[Tools reference](https://wiki.playgama.com/playgama/mcp/tools#game-telemetry).
+
 ### Sandbox traffic
 
-Get a free boost after sharing your game on any platform. The developer publishes the post and
-pastes its link to the agent, which passes one to three public HTTPS post links to `start_sandbox_traffic` in `postUrls`; one is enough. The bonus is once per game,
-for up to three games per organization over its lifetime. Earlier free launches without sharing
-do not use this bonus. `get_sandbox_share` has the ready post and share links. Paid traffic is
-available in the console; MCP does not purchase it.
+Two separate traffic bonuses can start a sandbox campaign:
+
+- A referral bonus comes from `get_referral_program` and is passed to `start_sandbox_traffic` as
+  `bonusId`; it needs no social post. Every organization member can share the returned
+  `invitation.url`. Apply only a developer-provided invitation, before the invited organization's
+  first sandbox publication. An accepted invitation grants the invited studio $3 of traffic; its
+  first sandbox publication grants the inviter another $3 of traffic. These are campaign budgets,
+  not cash.
+- The share bonus follows a post about the game on any platform. The developer publishes the post
+  and pastes its link to the agent, which passes one to three public HTTPS post links to
+  `start_sandbox_traffic` in `postUrls`; one is enough. The bonus is once per game,
+  for up to three games per organization over its lifetime. Earlier free launches without sharing
+  do not use this bonus. `get_sandbox_share` has the ready post and share links. Paid traffic is
+  available in the console; MCP does not purchase it.
 
 ## Limits
 

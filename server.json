@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.playgama/developer-cabinet",
   "title": "Playgama Developer Console",
-  "description": "Manage Playgama HTML5 games: forms, builds, covers, in-app catalog, leaderboards, sandbox.",
-  "version": "1.3.0",
+  "description": "Manage Playgama HTML5 games: forms, builds, covers, in-app catalog, leaderboards, game telemetry, referral traffic bonuses, sandbox.",
+  "version": "1.5.0",
   "websiteUrl": "https://playgama.com/mcp/",
   "repository": {
     "url": "https://github.com/Playgama/developer-cabinet-mcp",
