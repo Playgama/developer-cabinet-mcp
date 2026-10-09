@@ -2,9 +2,18 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.playgama/developer-cabinet",
   "title": "Playgama Developer Console",
-  "description": "Manage Playgama HTML5 games: forms, builds, covers, in-app catalog, leaderboards, game telemetry, referral traffic bonuses, sandbox.",
+  "description": "Manage Playgama HTML5 games, builds, telemetry, leaderboards, and sandbox testing.",
   "version": "1.5.0",
   "websiteUrl": "https://playgama.com/mcp/",
+  "icons": [
+    {
+      "src": "https://static.playgama.com/p-static/static/image/favicon-512.forced.0e230cda.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "512x512"
+      ]
+    }
+  ],
   "repository": {
     "url": "https://github.com/Playgama/developer-cabinet-mcp",
     "source": "github"
@@ -14,5 +23,28 @@
       "type": "streamable-http",
       "url": "https://developer.playgama.com/api/mcp"
     }
-  ]
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "com.playgama": {
+        "authentication": "OAuth 2.1 (DCR + PKCE S256, scope mcp)",
+        "categories": [
+          "gaming",
+          "developer-tools"
+        ],
+        "docsUrl": "https://wiki.playgama.com/playgama/mcp",
+        "readOnlyToolCount": 21,
+        "supportEmail": "developer.success@playgama.com",
+        "tags": [
+          "game-development",
+          "html5-games",
+          "game-publishing",
+          "web-games",
+          "playgama"
+        ],
+        "toolCount": 33,
+        "toolsReferenceUrl": "https://wiki.playgama.com/playgama/mcp/tools"
+      }
+    }
+  }
 }
