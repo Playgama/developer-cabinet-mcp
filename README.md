@@ -9,7 +9,7 @@ the connection.
 
 ## What you get
 
-- **Publish in seconds** — ask your agent, get a public playable link back.
+- **Publish in minutes** — ask your agent, get a public playable link back.
 - **Get the audience** — the game takes its first players from the Playgama network, and
   Playgama DSP can send more the day it goes live (beta). The agent can start that campaign
   itself with `start_sandbox_traffic`; share the game first and the boost is free.
@@ -144,7 +144,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_referral_program` | Reads your organization's invitation, eligibility and referral traffic bonuses | read-only |
 | `apply_referral_code` | Accepts a developer-provided invitation before the organization's first sandbox publication | write |
 | **Sandbox** | | |
-| `get_sandbox_state` | Reads what is live in the sandbox and whether a publish would be accepted | read-only |
+| `get_sandbox_state` | Reads what is live in the sandbox, how the latest publication went, and whether a publish would be accepted | read-only |
 | `get_sandbox_share` | Reads the ready post and share links for the live sandbox | read-only |
 | `publish_sandbox` | Makes a build playable by anyone with the link, without moderation | write |
 | `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
@@ -173,6 +173,10 @@ A request only to read data does not authorize game changes, publication or a tr
    `publish_sandbox` is refused with `COVERS_INCOMPLETE`, which names the empty slots in
    `emptySlots`, or `FORM_INCOMPLETE`, which names the fields in `missingFields`: upload the covers
    or fill the fields with `update_application_form`, then publish again.
+6. `publish_sandbox` answers `PENDING`: the build is built, then published, as a rule within
+   minutes. Follow `publication` in `get_sandbox_state` until it leaves `IN_PROGRESS`; once it is
+   `PUBLISHED`, hand out the `url` from the publish answer. `FAILED` means the build did not go
+   live. While a publication is in progress, another publish is refused with 409.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
 1080×1920 (portrait) or 1920×1080 (landscape). All three are required for a sandbox publish and
@@ -222,7 +226,7 @@ Two separate traffic bonuses can start a sandbox campaign:
 
 - Build archive: up to 300 MB per zip.
 - Cover: up to 10 MB per file.
-- Sandbox: 3 publications per rolling hour per game; only publications that change something count.
+- Sandbox: 15 publications per rolling hour per game; every publication counts, the same build included.
 
 ## What the server deliberately does not do
 
