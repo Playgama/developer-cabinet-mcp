@@ -102,7 +102,7 @@ for now. Remove the header and connect again as above.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.6.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.7.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -111,6 +111,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `create_application` | Creates a new game as a draft | write |
 | `get_application` | Reads a game's saved form, archives and media | read-only |
 | `update_application_form` | Saves form fields; fields you leave out keep their values | write |
+| `get_game_categories` | Reads the categories `update_application_form` takes for `category`, in priority order, and how to choose one by the core mechanic | read-only |
 | `get_submission_state` | Tells whether the game can be submitted to moderation now, and why not | read-only |
 | `list_moderation_comments` | Reads the moderation correspondence on a game | read-only |
 | `get_launch_steps` | Reads a game's launch path in order — archive, Bridge SDK, covers, form, sandbox, share, traffic — with the current step and the tools that move each one | read-only |
