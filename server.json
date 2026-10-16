@@ -3,7 +3,7 @@
   "name": "com.playgama/developer-cabinet",
   "title": "Playgama Developer Console",
   "description": "Manage Playgama HTML5 games, builds, telemetry, leaderboards, and sandbox testing.",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "websiteUrl": "https://playgama.com/mcp/",
   "icons": [
     {
@@ -33,7 +33,7 @@
           "developer-tools"
         ],
         "docsUrl": "https://wiki.playgama.com/playgama/mcp",
-        "readOnlyToolCount": 21,
+        "readOnlyToolCount": 22,
         "supportEmail": "developer.success@playgama.com",
         "tags": [
           "game-development",
@@ -42,7 +42,7 @@
           "web-games",
           "playgama"
         ],
-        "toolCount": 33,
+        "toolCount": 34,
         "toolsReferenceUrl": "https://wiki.playgama.com/playgama/mcp/tools"
       }
     }

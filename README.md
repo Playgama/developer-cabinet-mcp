@@ -102,7 +102,7 @@ for now. Remove the header and connect again as above.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.5.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.6.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -144,7 +144,8 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_referral_program` | Reads your organization's invitation, eligibility and referral traffic bonuses | read-only |
 | `apply_referral_code` | Accepts a developer-provided invitation before the organization's first sandbox publication | write |
 | **Sandbox** | | |
-| `get_sandbox_state` | Reads what is live in the sandbox, how the latest publication went, and whether a publish would be accepted | read-only |
+| `get_sandbox_state` | Reads what is live in the sandbox and whether a publish would be accepted | read-only |
+| `get_publications` | Reads how the latest publication of each destination, the sandbox and the catalog, went | read-only |
 | `get_sandbox_share` | Reads the ready post and share links for the live sandbox | read-only |
 | `publish_sandbox` | Makes a build playable by anyone with the link, without moderation | write |
 | `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
@@ -171,11 +172,12 @@ A request only to read data does not authorize game changes, publication or a tr
    upload a new archive. If `processing` is `FAILED`, upload a corrected zip.
 5. A sandbox publish also needs all three covers and a complete form. Without them
    `publish_sandbox` is refused with `COVERS_INCOMPLETE`, which names the empty slots in
-   `emptySlots`, or `FORM_INCOMPLETE`, which names the fields in `missingFields`: upload the covers
+   `emptySlots`, or `FORM_INCOMPLETE`, which names the fields in `details`: upload the covers
    or fill the fields with `update_application_form`, then publish again.
 6. `publish_sandbox` answers `PENDING`: the build is built, then published, as a rule within
-   minutes. Follow `publication` in `get_sandbox_state` until it leaves `IN_PROGRESS`; once it is
-   `PUBLISHED`, hand out the `url` from the publish answer. `FAILED` means the build did not go
+   minutes. Follow the `PLAYGAMA_SANDBOX` publication in `get_publications`, waiting its
+   `retryAfterSeconds` between reads, until it leaves `IN_PROGRESS`; once it is `PUBLISHED`, hand
+   out the `url` from the publish answer. `FAILED` means the build did not go
    live. While a publication is in progress, another publish is refused with 409.
 
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
@@ -234,7 +236,7 @@ These stay human actions in the console:
 
 - submitting a game to moderation;
 - deleting anything — leaderboards, or archives and covers from the form;
-- rolling a game back to its last submitted version;
+- rolling a game back to its latest release;
 - reading payouts;
 - uploading screenshots, videos and other assets.
 
