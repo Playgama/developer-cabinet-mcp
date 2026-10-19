@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.playgama/developer-cabinet",
   "title": "Playgama Developer Console",
-  "description": "Manage Playgama HTML5 games, builds, telemetry, leaderboards, and sandbox testing.",
-  "version": "1.7.0",
+  "description": "Manage Playgama HTML5 games, builds, telemetry, leaderboards, sandbox testing, and catalog updates.",
+  "version": "1.8.0",
   "websiteUrl": "https://playgama.com/mcp/",
   "icons": [
     {
@@ -42,7 +42,7 @@
           "web-games",
           "playgama"
         ],
-        "toolCount": 35,
+        "toolCount": 36,
         "toolsReferenceUrl": "https://wiki.playgama.com/playgama/mcp/tools"
       }
     }

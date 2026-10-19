@@ -102,7 +102,7 @@ for now. Remove the header and connect again as above.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.7.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.8.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -151,6 +151,8 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `publish_sandbox` | Makes a build playable by anyone with the link, without moderation | write |
 | `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
 | `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers; use a referral `bonusId`, or 1–3 public post links for the separate share bonus | write |
+| **Catalog** | | |
+| `send_playgama_catalog_update` | Sends an update of a game already live in the Playgama catalog to all its players, without moderation, on the developer's explicit yes | write |
 
 Every write tool is annotated `destructiveHint: true`; clients decide how to use that hint when requesting confirmation.
 
@@ -184,6 +186,21 @@ A request only to read data does not authorize game changes, publication or a tr
 Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (square),
 1080×1920 (portrait) or 1920×1080 (landscape). All three are required for a sandbox publish and
 for a submit to moderation.
+
+### Updating a game live in the catalog
+
+A game already live in the Playgama catalog can take an update without moderation; a first
+publication and every other platform still go through moderation, which the developer submits in
+the console.
+
+1. `get_submission_state` with the build's `archiveId` and `reviewType: AUTO` says whether the
+   update would be refused, and why.
+2. The agent tells the developer the game, the build and that every catalog player gets it with
+   no moderator checking it first, and goes on only on their explicit yes to this update.
+3. `send_playgama_catalog_update` takes the build and a required `updateNote` — what players will
+   notice — and answers `PENDING` with a `releaseId`. Follow the `PLAYGAMA` publication with that
+   `releaseId` in `get_publications` until it leaves `IN_PROGRESS`: `PUBLISHED` — the update is
+   live; `FAILED` — players keep the previous build.
 
 ### Game telemetry
 
