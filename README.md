@@ -150,7 +150,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_sandbox_share` | Reads the ready post and share links for the live sandbox | read-only |
 | `publish_sandbox` | Makes a build playable by anyone with the link, without moderation | write |
 | `get_sandbox_traffic` | Reads whether traffic can be brought to the sandbox, the package on offer and the runs so far | read-only |
-| `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers; use a referral `bonusId`, or 1–3 public post links for the separate share bonus | write |
+| `start_sandbox_traffic` | Starts a DSP campaign built from the game's covers; use a referral `bonusId`, or 1–2 public post links for the separate share bonus | write |
 | **Catalog** | | |
 | `send_playgama_catalog_update` | Sends an update of a game already live in the Playgama catalog to all its players, without moderation, on the developer's explicit yes | write |
 
