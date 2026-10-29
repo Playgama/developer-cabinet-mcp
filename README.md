@@ -34,9 +34,10 @@ server; revoke it on the same page and it is refused on its next call.
 
 **Every game needs the [Playgama Bridge SDK](https://wiki.playgama.com/playgama/bridge-sdk/getting-started)
 integrated — the sandbox included.** If your game does not have it yet, the agent integrates it
-before the first upload: `get_bridge_sdk_docs` serves the docs, and the
-[Game checklist](https://wiki.playgama.com/playgama/mcp/game-checklist) lists the required steps
-in order. A build in which the SDK was not detected is not published, and the sandbox takes
+before the first upload: `get_bridge_sdk_docs` serves the docs, starting with their required
+steps, and `get_game_checklist` serves the numbered
+[Game Requirements](https://wiki.playgama.com/playgama/game-requirements) every game and its
+archive must meet. A build in which the SDK was not detected is not published, and the sandbox takes
 **Playgama Bridge 2.2.0 or newer** only.
 
 Questions: [developer.success@playgama.com](mailto:developer.success@playgama.com)
@@ -102,7 +103,7 @@ for now. Remove the header and connect again as above.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.8.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.9.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -133,8 +134,9 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_archive_qa_tool_link` | Opens an uploaded build in the Playgama QA Tool | read-only |
 | `get_local_game_qa_tool_link` | Opens a game served from localhost in the QA Tool | read-only |
 | **Docs** | | |
-| `get_bridge_sdk_docs` | Reads the live Playgama Bridge SDK wiki, the whole index or one page | read-only |
-| `get_game_checklist` | Reads the live game checklist — what a game and its archive must meet before an upload | read-only |
+| `get_bridge_sdk_docs` | Reads the live Playgama Bridge SDK wiki, the whole index or one page; start with the required steps on `api` | read-only |
+| `get_game_checklist` | Reads the live game requirements — every numbered rule a game and its archive must meet — in one call | read-only |
+| `get_game_guides` | Reads the live guides — recommendations on layout, controls, sound, saving, monetization and performance — the index or one guide | read-only |
 | **Game telemetry** | | |
 | `get_game_telemetry_guide` | Reads agent-only instructions for instrumenting a game and interpreting telemetry | read-only |
 | `get_game_telemetry_analytics` | Reads a compact overview and paginated event inventory for one game | read-only |
@@ -161,8 +163,9 @@ A request only to read data does not authorize game changes, publication or a tr
 
 ### Uploading a build
 
-1. Read `get_game_checklist` and check the game and the zip against each item; fix what fails
-   before uploading.
+1. Read `get_game_checklist` and check the game and the zip against each requirement by its
+   number; fix what fails before uploading. The agent reads the requirements and the SDK required
+   steps once already, when it starts work on the game.
 2. `start_archive_upload` answers `uploadUrl` and `headers`.
 3. PUT the zip to `uploadUrl` with exactly those headers, e.g.
    `curl -T game.zip -H "Content-Type: application/zip" "<uploadUrl>"`.
