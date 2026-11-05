@@ -176,10 +176,11 @@ A request only to read data does not authorize game changes, publication or a tr
    sandbox also refuses a build on a Playgama Bridge older than 2.2.0 (`BRIDGE_VERSION_OUTDATED`)
    or one whose version the check could not read (`BRIDGE_VERSION_UNKNOWN`): update the SDK and
    upload a new archive. If `processing` is `FAILED`, upload a corrected zip.
-5. A sandbox publish also needs all three covers and a complete form. Without them
-   `publish_sandbox` is refused with `COVERS_INCOMPLETE`, which names the empty slots in
-   `emptySlots`, or `FORM_INCOMPLETE`, which names the fields in `details`: upload the covers
-   or fill the fields with `update_application_form`, then publish again.
+5. A sandbox publish also needs all three covers and a complete form with an English title.
+   Without them `publish_sandbox` is refused with `COVERS_INCOMPLETE`, which names the empty
+   slots in `emptySlots`, or `FORM_INCOMPLETE`, which names the fields in `details`, a title with
+   non-Latin letters among them: upload the covers or fill and fix the fields with
+   `update_application_form`, then publish again.
 6. `publish_sandbox` answers `PENDING`: the build is built, then published, as a rule within
    minutes. Follow the `PLAYGAMA_SANDBOX` publication in `get_publications`, waiting its
    `retryAfterSeconds` between reads, until it leaves `IN_PROGRESS`; once it is `PUBLISHED`, hand
