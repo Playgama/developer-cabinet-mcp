@@ -103,7 +103,7 @@ for now. Remove the header and connect again as above.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.9.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.10.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -123,6 +123,9 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | **Covers** | | |
 | `start_cover_upload` | Starts a cover upload for one slot: square, portrait or landscape | write |
 | `confirm_cover_upload` | Checks the image and puts it in its slot | write |
+| **Screenshots and videos** | | |
+| `start_media_upload` | Starts an upload of a screenshot, the trailer or another video | write |
+| `confirm_media_upload` | Checks the file's format and shows it in the form; a new trailer replaces the old one | write |
 | **In-app purchases** | | |
 | `list_in_app_products` | Reads the in-app catalog with its checksum | read-only |
 | `replace_in_app_products` | Replaces the whole catalog; products left out are deleted | write |
@@ -191,6 +194,10 @@ Covers work the same way, one slot per call: a PNG or JPEG of exactly 800×800 (
 1080×1920 (portrait) or 1920×1080 (landscape). All three are required for a sandbox publish and
 for a submit to moderation.
 
+Screenshots and videos take the same three steps with `start_media_upload` and
+`confirm_media_upload`: a screenshot is a PNG or JPEG, the trailer and other videos are MP4. A game
+has one trailer; a new one takes the old one out of the form. They are optional.
+
 ### Updating a game live in the catalog
 
 A game already live in the Playgama catalog can take an update without moderation; a first
@@ -250,6 +257,7 @@ Two separate traffic bonuses can start a sandbox campaign:
 
 - Build archive: up to 300 MB per zip.
 - Cover: up to 10 MB per file.
+- Screenshot: up to 10 MB per file; trailer and other videos: up to 200 MB per file.
 - Sandbox: 15 publications per rolling hour per game; every publication counts, the same build included.
 
 ## What the server deliberately does not do
@@ -260,7 +268,7 @@ These stay human actions in the console:
 - deleting anything — leaderboards, or archives and covers from the form;
 - rolling a game back to its latest release;
 - reading payouts;
-- uploading screenshots, videos and other assets.
+- uploading other assets.
 
 ## Beyond the MCP server
 
