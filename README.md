@@ -199,8 +199,9 @@ Screenshots and videos take the same three steps with `start_media_upload` and
 has one trailer; a new one takes the old one out of the form. They are optional: the agent offers
 them once, after the covers, and the open
 [`playgama-game-video`](https://github.com/Playgama/gamedev-skills) skill films a trailer and
-screenshots from the running game. The Playgama catalog takes only screenshots, into a gallery
-still empty at the game's next catalog publication; the trailer and videos stay in the console.
+screenshots from the running game. The Playgama catalog takes only screenshots, carried by an
+update or submit sent after the upload, into a gallery still empty when it is published; the
+trailer and videos stay in the console.
 
 ### Updating a game live in the catalog
 
