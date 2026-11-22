@@ -197,11 +197,11 @@ for a submit to moderation.
 Screenshots and videos take the same three steps with `start_media_upload` and
 `confirm_media_upload`: a screenshot is a PNG or JPEG, the trailer and other videos are MP4. A game
 has one trailer; a new one takes the old one out of the form. They are optional: the agent offers
-them once, after the covers, and the open
-[`playgama-game-video`](https://github.com/Playgama/gamedev-skills) skill films a trailer and
-screenshots from the running game. The Playgama catalog takes only screenshots, carried by an
-update or submit sent after the upload, into a gallery still empty when it is published; the
-trailer and videos stay in the console.
+them once, after the covers. A developer who has none can have the open
+[`playgama-game-video`](https://github.com/Playgama/gamedev-skills) skill film a trailer and take
+screenshots from the running game; the agent films only when asked. The Playgama catalog takes
+only screenshots, carried by an update or submit sent after the upload, into a gallery still empty
+when it is published; the trailer and videos stay in the console.
 
 ### Updating a game live in the catalog
 
@@ -214,7 +214,7 @@ the console.
 2. The agent then asks the developer once, naming the game, the build and that every catalog
    player gets it with no moderator checking it first, and goes on only on their explicit yes to
    this update, without asking again. The update carries the covers, and screenshots only into an
-   empty gallery; it never carries the trailer or videos, and `updateNote` does not name them.
+   empty gallery; it does not carry the trailer or videos, and `updateNote` does not name them.
 3. `send_playgama_catalog_update` takes the build and a required `updateNote` — what players will
    notice — and answers `PENDING` with a `releaseId`. Follow the `PLAYGAMA` publication with that
    `releaseId` in `get_publications` until it leaves `IN_PROGRESS`: `PUBLISHED` — the update is
