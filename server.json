@@ -3,7 +3,7 @@
   "name": "com.playgama/developer-cabinet",
   "title": "Playgama Developer Console",
   "description": "Manage Playgama HTML5 games, builds, telemetry, leaderboards, sandbox testing, and catalog updates.",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "websiteUrl": "https://playgama.com/mcp/",
   "icons": [
     {
