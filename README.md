@@ -200,9 +200,10 @@ has one trailer; a new one takes the old one out of the form. They are optional:
 them once, after the covers. A developer who has none can have the open
 [`playgama-game-video`](https://github.com/Playgama/gamedev-skills) skill film a trailer and take
 screenshots from the running game; the agent films only when asked. The Playgama catalog takes
-only screenshots, carried by an update or submit sent after the upload: its publication adds to
-the end of the game's gallery the ones whose delivery the console has not confirmed yet; the trailer
-and videos stay in the console.
+screenshots carried by an update or submit sent after the upload: its publication adds to the end
+of the game's gallery the ones whose delivery the console has not confirmed yet. The trailer reaches
+the catalog only with a submit a moderator publishes, and only while the game there shows no video;
+other videos stay in the console.
 
 ### Updating a game live in the catalog
 
