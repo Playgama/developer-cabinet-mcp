@@ -202,8 +202,8 @@ them once, after the covers. A developer who has none can have the open
 screenshots from the running game; the agent films only when asked. The Playgama catalog takes
 screenshots carried by an update or submit sent after the upload: its publication adds to the end
 of the game's gallery the ones whose delivery the console has not confirmed yet. The trailer reaches
-the catalog only with a submit a moderator publishes, and only while the game there shows no video;
-other videos stay in the console.
+the catalog only with a submit sent after the upload that a moderator publishes, only up to 100 MiB
+and only while the game there shows no video; other videos stay in the console.
 
 ### Updating a game live in the catalog
 
