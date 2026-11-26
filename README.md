@@ -103,7 +103,7 @@ for now. Remove the header and connect again as above.
 
 ## Tools
 
-The authoritative list is what the server answers to `tools/list`. As of version 1.10.0:
+The authoritative list is what the server answers to `tools/list`. As of version 1.11.0:
 
 | Tool | What it does | Kind |
 | --- | --- | --- |
@@ -115,7 +115,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | `get_game_categories` | Reads the categories `update_application_form` takes for `category`, in priority order, and how to choose one by the core mechanic | read-only |
 | `get_submission_state` | Tells whether the game can be submitted to moderation now, and why not | read-only |
 | `list_moderation_comments` | Reads the moderation correspondence on a game | read-only |
-| `get_launch_steps` | Reads a game's launch path in order — archive, Bridge SDK, covers, form, sandbox, share, traffic — with the current step and the tools that move each one | read-only |
+| `get_launch_steps` | Reads a game's launch path in order — archive, Bridge SDK, covers, screenshots and trailer, form, sandbox, share, traffic — with the current step and the tools that move each one | read-only |
 | **Builds** | | |
 | `start_archive_upload` | Starts a zip upload and answers a one-hour upload URL | write |
 | `confirm_archive_upload` | Adds the uploaded archive to the form and starts unpacking | write |
@@ -200,8 +200,10 @@ has one trailer; a new one takes the old one out of the form. They are optional:
 them once, after the covers. A developer who has none can have the open
 [`playgama-game-video`](https://github.com/Playgama/gamedev-skills) skill film a trailer and take
 screenshots from the running game; the agent films only when asked. The Playgama catalog takes
-only screenshots, carried by an update or submit sent after the upload, into a gallery still empty
-when it is published; the trailer and videos stay in the console.
+screenshots carried by an update or submit sent after the upload: its publication adds to the end
+of the game's gallery the ones whose delivery the console has not confirmed yet. The trailer reaches
+the catalog only with a submit sent after the upload that a moderator publishes, only up to 100 MiB
+and only while the game there shows no video; other videos stay in the console.
 
 ### Updating a game live in the catalog
 
@@ -213,8 +215,9 @@ the console.
    update would be refused, and why.
 2. The agent then asks the developer once, naming the game, the build and that every catalog
    player gets it with no moderator checking it first, and goes on only on their explicit yes to
-   this update, without asking again. The update carries the covers, and screenshots only into an
-   empty gallery; it does not carry the trailer or videos, and `updateNote` does not name them.
+   this update, without asking again. The update carries the covers, and the screenshots whose
+   delivery the console has not confirmed yet, added to the end of the gallery; it does not carry
+   the trailer or videos, and `updateNote` does not name them.
 3. `send_playgama_catalog_update` takes the build and a required `updateNote` — what players will
    notice — and answers `PENDING` with a `releaseId`. Follow the `PLAYGAMA` publication with that
    `releaseId` in `get_publications` until it leaves `IN_PROGRESS`: `PUBLISHED` — the update is
