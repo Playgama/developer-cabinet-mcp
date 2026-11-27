@@ -132,7 +132,7 @@ The authoritative list is what the server answers to `tools/list`. As of version
 | **Leaderboards** | | |
 | `list_leaderboards` | Lists a game's leaderboards | read-only |
 | `create_leaderboard` | Adds a leaderboard | write |
-| `update_leaderboard` | Changes a leaderboard's name, type or score order | write |
+| `update_leaderboard` | Changes a leaderboard's name, type, score order or score mode | write |
 | **Testing** | | |
 | `get_archive_qa_tool_link` | Opens an uploaded build in the Playgama QA Tool | read-only |
 | `get_local_game_qa_tool_link` | Opens a game served from localhost in the QA Tool | read-only |
